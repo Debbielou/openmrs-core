@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.openmrs.ConceptClass;
+import org.openmrs.api.ConceptService;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -22,7 +23,9 @@ import org.springframework.validation.Errors;
  * Tests methods on the {@link ConceptClassValidator} class.
  */
 public class ConceptClassValidatorTest extends BaseContextSensitiveTest {
-	
+
+	private ConceptClassValidator validator;
+	private ConceptService mockConceptService;
 	/**
 	 * @see ConceptClassValidator#validate(Object,Errors)
 	 */
@@ -135,4 +138,22 @@ public class ConceptClassValidatorTest extends BaseContextSensitiveTest {
 		assertTrue(errors.hasFieldErrors("description"));
 		assertTrue(errors.hasFieldErrors("retireReason"));
 	}
+
+//	/**
+//	 * @see ConceptClassValidator#validate(Object, Errors)
+//	 */
+//		
+//	@Test
+//	public void validate_shouldFailIfIdIsNotNullForNewConceptClass() {
+//		ConceptClass cc = new ConceptClass();
+//		cc.setName("New Concept Class");
+//		cc.setDescription("A new concept class for testing.");
+//		cc.setConceptClassId(123); // Setting an ID for a new object
+//
+//		Errors errors = new BindException(cc, "cc");
+//		validator.validate(cc, errors);
+//
+//		assertTrue(errors.hasFieldErrors("conceptClassId"), "Validation should fail if ID is not null for a new ConceptClass.");
+//	}
 }
+
