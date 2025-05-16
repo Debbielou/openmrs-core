@@ -4083,7 +4083,29 @@ public class ConceptServiceTest extends BaseContextSensitiveTest {
 			.configure().applySettings(configuration.getProperties()).build();
 
  	Metadata metaData = new MetadataSources(standardRegistry).addAnnotatedClass(ConceptClass.class)
-			.getMetadataBuilder().build();
+		.addAnnotatedClass(Encounter.class).addAnnotatedClass(OrderServiceTest.SomeTestOrder.class)
+		.addAnnotatedClass(Diagnosis.class).addAnnotatedClass(Condition.class)
+		.addAnnotatedClass(Visit.class).addAnnotatedClass(VisitAttributeType.class)
+		.addAnnotatedClass(MedicationDispense.class)
+		.addAnnotatedClass(ProviderAttributeType.class)
+		.addAnnotatedClass(ConceptMapType.class)
+		.addAnnotatedClass(Relationship.class)
+		.addAnnotatedClass(Location.class)
+		.addAnnotatedClass(PersonAddress.class)
+		.addAnnotatedClass(PersonAttributeType.class)
+		.addAnnotatedClass(User.class)
+		.addAnnotatedClass(LocationAttributeType.class)
+		.addAnnotatedClass(SerializedObject.class)
+		.addAnnotatedClass(PatientState.class)
+		.addAnnotatedClass(DrugIngredient.class)
+		.addAnnotatedClass(DrugReferenceMap.class)
+		.addAnnotatedClass(AlertRecipient.class)
+		.addAnnotatedClass(PatientIdentifierType.class)
+		.addAnnotatedClass(ProgramAttributeType.class)
+		.addAnnotatedClass(HL7InError.class)
+		.addAnnotatedClass(OrderType.class)
+		.addAnnotatedClass(Allergy.class)
+		.getMetadataBuilder().build();
 
 		Field field = adminDAO.getClass().getDeclaredField("metadata");
 		field.setAccessible(true);

@@ -9,15 +9,23 @@
  */
 package org.openmrs.validator;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openmrs.ConceptClass;
+import org.openmrs.OrderType;
 import org.openmrs.api.ConceptService;
+import org.openmrs.api.context.Context;
 import org.openmrs.test.jupiter.BaseContextSensitiveTest;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Tests methods on the {@link ConceptClassValidator} class.
@@ -139,21 +147,37 @@ public class ConceptClassValidatorTest extends BaseContextSensitiveTest {
 		assertTrue(errors.hasFieldErrors("retireReason"));
 	}
 
-//	/**
-//	 * @see ConceptClassValidator#validate(Object, Errors)
-//	 */
-//		
-//	@Test
-//	public void validate_shouldFailIfIdIsNotNullForNewConceptClass() {
-//		ConceptClass cc = new ConceptClass();
-//		cc.setName("New Concept Class");
-//		cc.setDescription("A new concept class for testing.");
-//		cc.setConceptClassId(123); // Setting an ID for a new object
-//
-//		Errors errors = new BindException(cc, "cc");
-//		validator.validate(cc, errors);
-//
-//		assertTrue(errors.hasFieldErrors("conceptClassId"), "Validation should fail if ID is not null for a new ConceptClass.");
-//	}
-}
+	/**
+	 * @see ConceptClassValidator#validate(Object, Errors)
+	 */
+
+	@Test
+	public void validate_shouldPassValidationIfIdIsNullForNewConceptClass() {
+		ConceptClass conceptClass = new ConceptClass();
+		conceptClass.setName("unique name");
+		conceptClass.setDescription("Testing for unique name");
+
+		Errors errors = new BindException(conceptClass, "conceptClass");
+		new ConceptClassValidator().validate(conceptClass, errors); 
+
+		assertFalse(errors.hasErrors());
+	}
+
+	/**
+	 * @see ConceptClassValidator#validate(Object, Errors)
+	 */
+	@Test
+	public void validate_shouldFailValidationIfIdIsNotNullForNewConceptClass() {
+		ConceptClass conceptClass = new ConceptClass();
+		conceptClass.setName("New Concept Class");
+		conceptClass.setDescription("A new concept class for testing.");
+		conceptClass.setConceptClassId(2001);
+
+		Errors errors = new BindException(conceptClass, "conceptClass");
+		new ConceptClassValidator().validate(conceptClass, errors); 
+
+		assertTrue(errors.hasFieldErrors("conceptClassId"), "Validation should fail if ID is not null for a new ConceptClass.");
+		assertTrue(errors.hasFieldErrors("conceptClassId"), "Should have a field error for conceptClassId");
+	}
+	  }
 

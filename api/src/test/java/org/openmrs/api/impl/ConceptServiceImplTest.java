@@ -545,15 +545,15 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 	/**
 	 * @see ConceptServiceImpl#saveConceptClass(ConceptClass)
 	 */
-	@Test
-	public void saveConceptClass_shouldSaveTheGivenConceptClass() {
-		int unusedConceptClassId = 123;
-		ConceptClass conceptClass = new ConceptClass(unusedConceptClassId);
-		conceptClass.setName("name");
-		conceptClass.setDescription("description");
-		conceptService.saveConceptClass(conceptClass);
-		assertEquals(conceptClass, conceptService.getConceptClass(unusedConceptClassId));
-	}
+//	@Test
+//	public void saveConceptClass_shouldSaveTheGivenConceptClass() {
+//		int unusedConceptClassId = 123;
+//		ConceptClass conceptClass = new ConceptClass(unusedConceptClassId);
+//		conceptClass.setName("name");
+//		conceptClass.setDescription("description");
+//		conceptService.saveConceptClass(conceptClass);
+//		assertEquals(conceptClass, conceptService.getConceptClass(unusedConceptClassId));
+//	}
 	
 	/**
 	 * @see ConceptServiceImpl#purgeConceptClass(ConceptClass)
@@ -984,5 +984,21 @@ public class ConceptServiceImplTest extends BaseContextSensitiveTest {
 		conceptNumeric.setDatatype(new ConceptDatatype(1));
 		conceptNumeric.setConceptClass(new ConceptClass(1));
 		return (ConceptNumeric) Context.getConceptService().saveConcept(conceptNumeric);
+	}
+
+	@Test
+	public void saveConceptClass_shouldSaveTheGivenConceptClass() {
+		String conceptClassName = "name";
+		String conceptClassDescription = "description";
+		ConceptClass conceptClass = new ConceptClass();
+		conceptClass.setName(conceptClassName);
+		conceptClass.setDescription(conceptClassDescription);
+
+		ConceptClass savedConceptClass = conceptService.saveConceptClass(conceptClass);
+
+		assertNotNull(savedConceptClass.getConceptClassId()); // The ID should be assigned by hibernate upon saving
+		assertEquals(conceptClassName, savedConceptClass.getName());
+		assertEquals(conceptClassDescription, savedConceptClass.getDescription());
+		assertEquals(conceptClass, conceptService.getConceptClass(savedConceptClass.getConceptClassId()));
 	}
 }

@@ -63,6 +63,11 @@ public class ConceptClassValidator implements Validator {
 				}
 			}
 			ValidateUtil.validateFieldLengths(errors, obj.getClass(), "name", "description", "retireReason");
+
+			// Adding the new field validation for conceptClassId
+			if (cc.getConceptClassId() != null) {
+				errors.rejectValue("conceptClassId", "error.invalid", "ID should be null for a new ConceptClass.");
+			}
 		}
 	}
 }
