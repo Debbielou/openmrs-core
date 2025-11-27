@@ -83,6 +83,7 @@
 		<modifyDataType tableName="concept_reference_range" columnName="criteria" newDataType="TEXT" />
 	</changeSet>
 
+<<<<<<< Updated upstream
 	<changeSet id="TRUNK-5891-2025-10-19" author="Deborah Nakamatte">
 		<addColumn tableName="program_workflow_state">
 			<column name="date_retired" type="datetime"/>
@@ -92,4 +93,10 @@
 		</addColumn>
 	</changeSet>
 
+=======
+	<changeSet id="2025-11-26-TRUNK-ProviderNameNullable" author="Deborah Nakamatte">
+		<comment>Making the provider.name column nullable to allow providers not associated with a person to be loaded.</comment>
+		<dropNotNullConstraint tableName="provider" columnName="name" columnDataType="VARCHAR(255)"/>
+	</changeSet>
+>>>>>>> Stashed changes
 </databaseChangeLog>
