@@ -9,6 +9,17 @@
  */
 package org.openmrs;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.hibernate.envers.Audited;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,30 +29,45 @@ import org.slf4j.LoggerFactory;
  *
  * @since 1.9
  */
+@Entity
+@Table(name = "provider")
 @Audited
+@AttributeOverrides({ @AttributeOverride(name = "name", column = @Column(name = "name", nullable = true)) })
 public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(Provider.class);
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "provider_id")
 	private Integer providerId;
-	
+
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "person_id")
 	private Person person;
-	
+
+	@Column(name = "identifier", length = 255)
 	private String identifier;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "role_id")
 	private Concept role;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "speciality_id")
 	private Concept speciality;
 
+	@ManyToOne
+	@JoinColumn(name = "provider_role_id")
 	private ProviderRole providerRole;
-	
+
 	public Provider() {
 	}
-	
+
 	public Provider(Integer providerId) {
 		this.providerId = providerId;
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#getId()
 	 */
@@ -49,7 +75,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public Integer getId() {
 		return getProviderId();
 	}
-	
+
 	/**
 	 * @see org.openmrs.OpenmrsObject#setId(java.lang.Integer)
 	 */
@@ -57,49 +83,49 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setId(Integer id) {
 		setProviderId(id);
 	}
-	
+
 	/**
 	 * @param providerId the providerId to set
 	 */
 	public void setProviderId(Integer providerId) {
 		this.providerId = providerId;
 	}
-	
+
 	/**
 	 * @return the providerId
 	 */
 	public Integer getProviderId() {
 		return providerId;
 	}
-	
+
 	/**
 	 * @param person the person to set
 	 */
 	public void setPerson(Person person) {
 		this.person = person;
 	}
-	
+
 	/**
 	 * @return the person
 	 */
 	public Person getPerson() {
 		return person;
 	}
-	
+
 	/**
 	 * @param identifier the identifier to set
 	 */
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	
+
 	/**
 	 * @return the identifier
 	 */
 	public String getIdentifier() {
 		return identifier;
 	}
-	
+
 	/**
 	 * Sets the role concept
 	 * 
@@ -109,7 +135,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setRole(Concept role) {
 		this.role = role;
 	}
-	
+
 	/**
 	 * Gets the role concept
 	 * 
@@ -119,7 +145,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public Concept getRole() {
 		return role;
 	}
-	
+
 	/**
 	 * Sets the speciality concept
 	 * 
@@ -129,7 +155,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setSpeciality(Concept speciality) {
 		this.speciality = speciality;
 	}
-	
+
 	/**
 	 * Gets the speciality concept
 	 * 
@@ -159,18 +185,18 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	public void setProviderRole(ProviderRole providerRole) {
 		this.providerRole = providerRole;
 	}
-	
+
 	@Override
 	public String toString() {
 		String provider = String.valueOf(providerId) + " providerName:" + ((person != null) ? person.getNames() : "");
 		return "[Provider: providerId:" + provider + " ]";
 	}
-	
+
 	/**
 	 * @see org.openmrs.BaseOpenmrsMetadata#getName()
 	 * <strong>Should</strong> return person full name if person is not null or null otherwise
 	 */
-	
+
 	@Override
 	public String getName() {
 		if (getPerson() != null && getPerson().getPersonName() != null) {
