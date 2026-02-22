@@ -57,7 +57,7 @@ public class ConceptName extends BaseOpenmrsObject implements Auditable, Voidabl
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "concept_name_id")	
+	@Column(name = "concept_name_id")
 	@DocumentId
 	private Integer conceptNameId;
 	
@@ -75,21 +75,21 @@ public class ConceptName extends BaseOpenmrsObject implements Auditable, Voidabl
 	private Locale locale; 
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "creator", nullable = false)	
+	@JoinColumn(name = "creator", nullable = false)
 	private User creator;
 	
-	@Column(name = "date_created", nullable = false)	
+	@Column(name = "date_created", nullable = false)
 	private Date dateCreated;
 	
-	@Column(name = "voided", length = 1, nullable = false)	
+	@Column(name = "voided", length = 1, nullable = false)
 	@GenericField
 	private Boolean voided = false;
 	
 	@ManyToOne
-	@JoinColumn(name = "voided_by")	
+	@JoinColumn(name = "voided_by")
 	private User voidedBy;
 	
-	@Column(name = "date_voided")	
+	@Column(name = "date_voided")
 	private Date dateVoided;
 	
 	@Column(name = "void_reason", length = 255)
@@ -101,23 +101,23 @@ public class ConceptName extends BaseOpenmrsObject implements Auditable, Voidabl
 			joinColumns = @JoinColumn(name = "concept_name_id"),
 			inverseJoinColumns = @JoinColumn(name = "concept_name_tag_id"))
 	private Collection<ConceptNameTag> tags;
-	@Column(name = "concept_name_type", length = 50)
 	
+	@Column(name = "concept_name_type", length = 50)
 	@Type(value = StringEnumType.class, parameters = {
 			@org.hibernate.annotations.Parameter(name = "enumClass", value = "org.openmrs.api.ConceptNameType")
-	})	
+	})
 	@GenericField
 	private ConceptNameType conceptNameType;
 	
-	@Column(name = "locale_preferred", length = 1, nullable = false)	
+	@Column(name = "locale_preferred", length = 1, nullable = false)
 	@GenericField
 	private Boolean localePreferred = false;
 	
 	@ManyToOne
-	@JoinColumn(name = "changed_by")	
+	@JoinColumn(name = "changed_by")
 	private User changedBy;
 	
-	@Column(name = "date_changed")	
+	@Column(name = "date_changed")
 	private Date dateChanged;
 	
 	// Constructors
