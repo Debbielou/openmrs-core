@@ -47,9 +47,9 @@ public class DatabaseUtil {
 	private static final String JTDS_DRIVER = "net.sourceforge.jtds.jdbc.Driver";
 	private static final String SQLSERVER_DRIVER = "com.microsoft.jdbc.sqlserver.SQLServerDriver";
 	
-	private static final List<String> ALLOWED_JDBC_DRIVERS = Collections.unmodifiableList(Arrays.asList(
+	private static final Set<String> ALLOWED_JDBC_DRIVERS = Set.of(
 		MYSQL_DRIVER, MYSQL_LEGACY_DRIVER, MARIADB_DRIVER, POSTGRESQL_DRIVER, H2_DRIVER, HSQLDB_DRIVER, ORACLE_DRIVER, SQLSERVER_DRIVER, JTDS_DRIVER
-	));
+	);
 	
 	private static final Logger log = LoggerFactory.getLogger(DatabaseUtil.class);
 
