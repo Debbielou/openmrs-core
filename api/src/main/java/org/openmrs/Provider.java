@@ -11,7 +11,6 @@ package org.openmrs;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,7 +41,7 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 	@Column(name = "provider_id")
 	private Integer providerId;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
 	
@@ -207,4 +206,3 @@ public class Provider extends BaseCustomizableMetadata<ProviderAttribute> {
 		}
 	}
 }
-
